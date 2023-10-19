@@ -18,7 +18,12 @@ function BookCard(props: IBookCardProps) {
       activeOpacity={0.5}
       onPress={onPress}
     >
-      {!image
+      {/** 
+       * This conditional rendering is correct but the Image source isn't working in this case, 
+       * I don't know why AzRy. When I render image source with {{ uri: image }} displays 
+       * blank space. so I render default book cover image here.
+      */}
+      {/* {image
         ? (
           <Image 
             source={{ uri: image }} 
@@ -35,7 +40,13 @@ function BookCard(props: IBookCardProps) {
             alt='Default Book Cover' 
           />
         )
-      }
+      } */}
+      <Image
+        source={images.defaultBookCover}
+        style={styles.image}
+        resizeMode='cover'
+        alt='Default Book Cover'
+      />
       <View style={styles.infoContent}>
         <Rating rating={rating} />
         <Heading
