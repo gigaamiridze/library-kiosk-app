@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { ALERT_TYPE } from 'react-native-alert-notification';
 import { ActivityIndicator, SafeAreaView, ScrollView, View, FlatList } from 'react-native';
-import { FlexBox, WelcomeSection, Heading, BookCard, Pagination, LoaderButton, LoginModal } from '../components';
+import { FlexBox, WelcomeSection, Heading, BookCard, Pagination, LoaderButton, LoginModal, ConfirmationModal } from '../components';
 import { Colors, Fonts, LibraryActions, Routes } from '../constants';
 import { useLibraryContext, useUserContext } from '../contexts';
 import { getBooksByCategory } from '../api';
@@ -9,7 +10,6 @@ import { globalStyles } from '../styles';
 import { useQuery } from 'react-query';
 import { IBook } from '../interfaces';
 import { showToast } from '../utils';
-import { ALERT_TYPE } from 'react-native-alert-notification';
 
 function Selection() {
   const [page, setPage] = useState<number>(0);
@@ -57,6 +57,17 @@ function Selection() {
     } else {
       showToast(ALERT_TYPE.WARNING, 'Warning', 'Please select a book.');
     }
+  };
+
+  const handleConfirmationModalConfirm = () => {
+    dispatchLibrary({ type: LibraryActions.BORROW_SUCCESS });
+
+    const timeoutId = setTimeout(() => {
+      setConfirmationModalVisible(false);
+      navigation.navigate(Routes.SERVICES);
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
   };
 
   return (
@@ -134,8 +145,14 @@ function Selection() {
           <LoginModal 
             isVisible={isLoginModalVisible}
             animationType='slide'
-            onSuccess={() => setLoginModalVisible(false)}
+            onSuccess={() => setConfirmationModalVisible(true)}
             onClose={() => setLoginModalVisible(false)}
+          />
+          <ConfirmationModal 
+            type='borrow'
+            isVisible={isConfirmationModalVisible}
+            animationType='slide'
+            onConfirm={handleConfirmationModalConfirm}
           />
         </FlexBox>
       </ScrollView>

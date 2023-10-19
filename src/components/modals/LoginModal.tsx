@@ -43,7 +43,9 @@ function LoginModal(props: ILoginModalProps) {
         showToast(ALERT_TYPE.SUCCESS, 'Success', "Congratulations! You've successfully logged into your account.");
         
         setTimeout(() => {
-          onClose();
+          if (onClose) {
+            onClose();
+          }
           
           if (token) {
             onSuccess();
