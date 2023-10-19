@@ -73,7 +73,7 @@ function Categories() {
               ) : isError ? (
                 <Heading
                   title='Something went wrong. Please try again.'
-                  type={5}
+                  type={4}
                   fontWeight='500'
                 />
               ) : (

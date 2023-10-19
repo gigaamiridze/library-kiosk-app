@@ -3,31 +3,27 @@ import { Colors, Fonts, Sizes } from '../../../constants';
 import { horizontalScale, verticalScale, scaleFontSize } from '../../../styles';
 
 export const styles = StyleSheet.create({
-  filedGroup: {
-    width: '100%',
-    height: 50,
-    position: 'relative',
-  },
-  input: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'transparent',
-    color: Colors.CADET_BLUE,
-    fontFamily: Fonts.PRIMARY,
-    fontSize: scaleFontSize(Sizes.X_SMALL),
+  fieldGroup: {
+    height: 40,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: Colors.CADET_BLUE,
-    borderRadius: horizontalScale(5),
-    paddingLeft: verticalScale(50),
-    paddingRight: verticalScale(16),
+    borderRadius: horizontalScale(7),
+    paddingHorizontal: horizontalScale(5),
+    flexDirection: 'row',
+    alignItems: 'center',
+    columnGap: verticalScale(5),
+  },
+  input: {
+    flex: 1,
+    height: '100%',
+    color: Colors.CADET_BLUE,
+    fontFamily: Fonts.PRIMARY,
+    fontSize: scaleFontSize(Sizes.X_SMALL),
   },
   icon: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    width: 50,
-    height: '100%',
+    width: 30,
+    height: 30,
     alignItems: 'center',
     justifyContent: 'center',
   },

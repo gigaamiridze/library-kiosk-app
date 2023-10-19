@@ -23,7 +23,14 @@ function Input(props: InputProps) {
   }
 
   return (
-    <View style={styles.filedGroup}>
+    <View style={styles.fieldGroup}>
+      <View style={styles.icon}>
+        <Ionicons 
+          name={getIcon()} 
+          size={20} 
+          color={Colors.CADET_BLUE} 
+        />
+      </View>
       <TextInput 
         placeholder={placeholder}
         placeholderTextColor={Colors.CADET_BLUE}
@@ -35,11 +42,6 @@ function Input(props: InputProps) {
           setValue(value);
           onChangeText(value);
         }}
-      />
-      <Ionicons 
-        name={getIcon()} 
-        size={18} 
-        color={Colors.CADET_BLUE} 
       />
     </View>
   )

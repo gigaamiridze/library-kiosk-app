@@ -10,12 +10,12 @@ export const styles = StyleSheet.create({
     backgroundColor: Colors.BACKDROP,
   },
   modalContent: {
-    width: '70%',
+    width: '88%',
     backgroundColor: Colors.WHITE,
     borderRadius: horizontalScale(20),
     paddingVertical: verticalScale(40),
-    paddingHorizontal: horizontalScale(30),
+    paddingHorizontal: horizontalScale(20),
     flexDirection: 'column',
-    rowGap: 30,
+    rowGap: horizontalScale(20),
   },
 });
