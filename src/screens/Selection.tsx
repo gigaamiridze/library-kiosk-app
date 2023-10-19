@@ -15,6 +15,7 @@ function Selection() {
   const [page, setPage] = useState<number>(0);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isLoginModalVisible, setLoginModalVisible] = useState<boolean>(false);
+  const [isConfirmationModalVisible, setConfirmationModalVisible] = useState<boolean>(false);
   const { libraryState, dispatchLibrary } = useLibraryContext();
   const { userState } = useUserContext();
   const navigation = useNavigation();
@@ -133,7 +134,7 @@ function Selection() {
           <LoginModal 
             isVisible={isLoginModalVisible}
             animationType='slide'
-            onSuccess={() => {}}
+            onSuccess={() => setLoginModalVisible(false)}
             onClose={() => setLoginModalVisible(false)}
           />
         </FlexBox>

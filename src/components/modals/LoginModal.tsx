@@ -1,12 +1,14 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useMutation } from 'react-query';
 import { Modal, View } from 'react-native';
+import { ALERT_TYPE } from 'react-native-alert-notification';
 import { Button, FlexBox, Heading, Input, LoaderButton } from '../../components';
+import { Api, Colors, UserActions } from '../../constants';
+import { removeWhitespaces, showToast } from '../../utils';
 import { ILoginModalProps } from '../../interfaces';
 import { useUserContext } from '../../contexts';
-import { removeWhitespaces, showToast } from '../../utils';
 import { styles } from './styles';
-import { Colors } from '../../constants';
-import { ALERT_TYPE } from 'react-native-alert-notification';
 
 function LoginModal(props: ILoginModalProps) {
   const { isVisible, animationType, onSuccess, onClose } = props;
@@ -14,6 +16,45 @@ function LoginModal(props: ILoginModalProps) {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const mutation = useMutation(
+    async (formData: { username: string; password: string }) => {
+      try {
+        const { data } = await axios.post(Api.AUTH_URL, formData, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        return data;
+      } catch (error) {
+        throw new Error('Invalid credentials.');
+      }
+    },
+    {
+      onSuccess: (data) => {
+        setIsDisabled(true);
+        const { username, email, token } = data;
+
+        dispatchUser({
+          type: UserActions.LOGIN_SUCCESS,
+          payload: { username, email, token },
+        });
+        showToast(ALERT_TYPE.SUCCESS, 'Success', "Congratulations! You've successfully logged into your account.");
+        
+        setTimeout(() => {
+          onClose();
+          
+          if (token) {
+            onSuccess();
+          }
+        }, 2000);
+      },
+      onError: (error: Error) => {
+        showToast(ALERT_TYPE.DANGER, 'Error', error.message);
+      },
+    }
+  );
 
   const handleLogin = () => {
     if (!username || !password) {
@@ -27,6 +68,8 @@ function LoginModal(props: ILoginModalProps) {
     if (password.length < 6 || password.length > 20) {
       return showToast(ALERT_TYPE.DANGER, 'Error', 'Password must be between 8 and 20 characters.');
     }
+
+    mutation.mutate({ username, password });
   };
 
   return (
