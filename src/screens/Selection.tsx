@@ -45,7 +45,7 @@ function Selection() {
 
       const timeoutId = setTimeout(() => {
         if (userState.isAuthenticated) {
-          // Confirmation modal set to true TODO:
+          setConfirmationModalVisible(true);
           setIsDisabled(false);
         } else {
           setLoginModalVisible(true);

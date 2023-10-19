@@ -10,6 +10,7 @@ export { default as Rating } from './selection/Rating/Rating';
 
 // Modal components
 export { default as ConfirmationModal } from './modals/ConfirmationModal';
+export { default as BookIdEntryModal } from './modals/BookIdEntryModal';
 export { default as LoginModal } from './modals/LoginModal';
 
 // Shared components

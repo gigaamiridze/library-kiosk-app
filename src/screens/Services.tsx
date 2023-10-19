@@ -1,24 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { ALERT_TYPE } from 'react-native-alert-notification';
 import { SafeAreaView, ScrollView, View } from 'react-native';
-import { FlexBox, WelcomeSection, Heading, ServiceCard } from '../components';
+import { FlexBox, WelcomeSection, Heading, ServiceCard, BookIdEntryModal, LoginModal, ConfirmationModal } from '../components';
+import { Fonts, LibraryActions, Routes } from '../constants';
 import { useLibraryContext } from '../contexts';
-import { Fonts, Routes } from '../constants';
 import { globalStyles } from '../styles';
 import { showToast } from '../utils';
 import { images } from '../assets';
 
 function Services() {
   const navigation = useNavigation();
-  const { libraryState } = useLibraryContext();
+  const [isLoginModalVisible, setLoginModalVisible] = useState<boolean>(false);
+  const [isBookIdModalVisible, setBookIdModalVisible] = useState<boolean>(false);
+  const [isConfirmationModalVisible, setConfirmationModalVisible] = useState<boolean>(false);
+  const { libraryState, dispatchLibrary } = useLibraryContext();
 
   const handleReturnBookButtonPress = () => {
     if (!libraryState.selectedBook?.id) {
-      showToast(ALERT_TYPE.WARNING, 'Borrow a Book', "You haven't borrowed a book yet, please borrow a book.");
+      showToast(ALERT_TYPE.WARNING, 'Info', "You haven't borrowed a book yet, please borrow a book.");
     } else {
-      // setBookIdModalOpen(true); // TODO:
+      setBookIdModalVisible(true);
     }
+  };
+
+  const handleConfirmationModalConfirm = () => {
+    dispatchLibrary({ type: LibraryActions.RETURN_SUCCESS });
+
+    const timeoutId = setTimeout(() => {
+      setConfirmationModalVisible(false);
+    }, 2000);
+
+    return () => clearTimeout(timeoutId);
   };
 
   return (
@@ -57,6 +70,27 @@ function Services() {
               />
             </FlexBox>
           </View>
+          <BookIdEntryModal 
+            isVisible={isBookIdModalVisible}
+            animationType='slide'
+            onClose={() => setBookIdModalVisible(false)}
+            onConfirm={() => {
+              setBookIdModalVisible(false);
+              setLoginModalVisible(true);
+            }}
+          />
+          <LoginModal 
+            isVisible={isLoginModalVisible}
+            animationType='slide'
+            onSuccess={() => setConfirmationModalVisible(true)}
+            onClose={() => setLoginModalVisible(false)}
+          />
+          <ConfirmationModal 
+            type='return'
+            isVisible={isConfirmationModalVisible}
+            animationType='slide'
+            onConfirm={handleConfirmationModalConfirm}
+          />
         </FlexBox>
       </ScrollView>
     </SafeAreaView>
