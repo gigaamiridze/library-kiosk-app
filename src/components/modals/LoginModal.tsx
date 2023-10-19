@@ -3,9 +3,10 @@ import { Modal, View } from 'react-native';
 import { Button, FlexBox, Heading, Input, LoaderButton } from '../../components';
 import { ILoginModalProps } from '../../interfaces';
 import { useUserContext } from '../../contexts';
-import { removeWhitespaces } from '../../utils';
+import { removeWhitespaces, showToast } from '../../utils';
 import { styles } from './styles';
 import { Colors } from '../../constants';
+import { ALERT_TYPE } from 'react-native-alert-notification';
 
 function LoginModal(props: ILoginModalProps) {
   const { isVisible, animationType, onSuccess, onClose } = props;
@@ -13,6 +14,20 @@ function LoginModal(props: ILoginModalProps) {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const handleLogin = () => {
+    if (!username || !password) {
+      return showToast(ALERT_TYPE.DANGER, 'Error', 'All fields are required.');
+    }
+
+    if (username.length < 4 || username.length > 20) {
+      return showToast(ALERT_TYPE.DANGER, 'Error', 'Username must be between 4 and 20 characters.');
+    }
+
+    if (password.length < 6 || password.length > 20) {
+      return showToast(ALERT_TYPE.DANGER, 'Error', 'Password must be between 8 and 20 characters.');
+    }
+  };
 
   return (
     <Modal
@@ -45,7 +60,7 @@ function LoginModal(props: ILoginModalProps) {
             <LoaderButton 
               title='Login'
               isDisabled={isDisabled}
-              onPress={() => {}}
+              onPress={handleLogin}
             />
             <Button 
               title='Cancel'
