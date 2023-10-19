@@ -1,79 +1,136 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Library Kiosk Project
 
-# Getting Started
+Welcome to the Library Kiosk Project. This project is a mobile application developed using TypeScript and React Native, aiming to streamline the borrowing and returning of books through a self-service kiosk in a library.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+[Click and view the application video review](https://clipchamp.com/watch/gWxH5UGRVou/embed)
 
-## Step 1: Start the Metro Server
+## Table of Contents
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+- [Technologies Used](#technologies-used)
+- [Objective](#objective)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+	- [Prerequisites](#prerequisites)
+	- [Installation](#installation)
+	- [Configuration](#configuration)
+	- [Running the Development Server](#running-the-development-server)
+- [Mocking the Backend](#mocking-the-backend)
+	- [Google Books API](#google-books-api)
+	- [DummyJSON](#dummyjson)
+- [Contributing](#contributing)
 
-To start Metro, run the following command from the _root_ of your React Native project:
+## Technologies Used
 
-```bash
-# using npm
-npm start
+- React Native with TypeScript
+- React Query
+- React Navigation
+- React Native Alert Notification
+- React Native Dotenv
+- React Native Vector Icons
+- Axios
 
-# OR using Yarn
-yarn start
-```
+## Objective
 
-## Step 2: Start your Application
+The primary objective of this project is to build a user-friendly front-end web application for a library self-service. It consists of three major components:
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+### 1. Main Services Page
 
-### For Android
+- An attractive page showcasing two primary services:
+    - Borrow a Book
+    - Return a Book
 
-```bash
-# using npm
-npm run android
+### 2. Borrow a Book
 
-# OR using Yarn
-yarn android
-```
+On selecting "Borrow a Book," the user is guided through the following steps:
 
-### For iOS
+- Select a Book Category.
+- Select a Book.
+- User Authentication.
+- Borrow Confirmation.
 
-```bash
-# using npm
-npm run ios
+### 3. Return a Book
 
-# OR using Yarn
-yarn ios
-```
+On selecting "Return a Book," the user is guided through the following steps:
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+- Book ID Entry. 
+- User Authentication. 
+- Return Confirmation.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+## Project Structure
 
-## Step 3: Modifying your App
+The project's structure is organized as follows:
 
-Now that you have successfully run the app, let's modify it.
+-  `src`: Contains the source code for the application. 
+-  `components`: Reusable UI components. 
+-  `screens`: Application screens and components. 
+-  `api`: Services for data fetching.
+-  `assets`: Stores static resources like images and fonts.
+-  `constants`: Stores constant values and configuration data.
+-  `interfaces`: Defines TypeScript or data structure interfaces.
+-  `contexts`: Manages state and provides data to components.
+-  `navigation`: Handles routing and navigation for the application.
+-  `styles`: Holds application theme and styling-related files.
+-  `utils`: Stores utility functions and helper code.
+-  `declarations`: Stores TypeScript declaration files.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+## Getting Started
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+Follow these steps to get your project up and running on your local machine.
 
-## Congratulations! :tada:
+### Prerequisites
 
-You've successfully run and modified your React Native App. :partying_face:
+Before you begin, ensure you have met the following requirements:
+-  **Node.js**: You need Node.js to run your React Native application. If you don't have it, you can download and install it from [nodejs.org](https://nodejs.org/).
+- **npm** (Node Package Manager): npm usually comes with Node.js, so you don't need to install it separately. To check if you have it installed, run the following command in your terminal: ```npm -v```
+- **Git**: You need Git for cloning the project repository. If you don't have it, you can download and install it from [git-scm.com](https://git-scm.com/).
 
-### Now what?
+### Installation
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+1.  **Clone the Repository**: To get started, you need to clone this repository to your local machine. Open your terminal and run the following command:
+```git clone git@github.com:gigaamiridze/library-kiosk-mobile-app.git```
 
-# Troubleshooting
+2.  **Change Directory**: Navigate to the project's root directory by running: ```cd library-kiosk-mobile-app```
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+3. **Install Dependencies**: Use npm to install the project dependencies: ```npm install```, also you can use yarn: ```yarn install```. 
 
-# Learn More
+### Configuration
 
-To learn more about React Native, take a look at the following resources:
+In the project root you need to create ```.env``` file for environment variables with this content:
+```BOOKS_API_KEY=AIzaSyCnanUBHliLM8PNNu-KvYcjN59BMBkmzW4```
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Running the Development Server
+
+To start a development server and see your React app in action, run the following command: ```npm start``` or ```yarn start```.
+
+## Mocking the Backend
+
+In this project, I use the Google Books API for fetching book data and DummyJSON for simulating user login.
+
+### Google Books API
+
+The Google Books API is utilized to fetch book information for the project. You can access the API documentation and obtain an API key from [Google Books API Documentation](https://developers.google.com/books/docs/v1/using).
+
+Here are the steps to fetch book data using the Google Books API:
+
+1. Obtain an API key from the Google Developers Console. 
+2. Configure your project to use the Google Books API and provide your API key. 
+3. Make HTTP requests to the API endpoints to retrieve book information.
+
+### DummyJSON
+
+To mock user login for testing purposes, I use the DummyJSON service. This service provides dummy data, including user credentials. You can find more details and generate dummy data at [DummyJSON Documentation](https://dummyjson.com/docs/auth).
+
+#### User Credentials:
+
+-   Username: kminchelle
+-   Password: 0lelplR
+
+You can use these credentials for testing and development, ensuring that your application's login system is functional without accessing real user data.
+
+## Contributing
+
+1. Fork the repository on GitHub. 
+2. Create a new branch with a descriptive name. 
+3. Make your changes and commit them. 
+4. Push your changes to your fork. 
+5. Create a pull request to this repository.
